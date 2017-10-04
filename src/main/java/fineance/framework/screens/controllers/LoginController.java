@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
 import javafx.scene.paint.Color;
+import services.impl.ItemServiceImpl;
 
 public class LoginController implements Initializable, ControlledScreen {
 	
@@ -47,6 +48,7 @@ public class LoginController implements Initializable, ControlledScreen {
 			if (DbConnect.connect()) {
 				lblStatus.setText("Login Successful");
 				
+				initItemService();
 				myController.setScreen(ScreensFramework.HOME_SCREEN_ID);
 			} else {
 				lblStatus.setText("Database Error");
@@ -58,6 +60,10 @@ public class LoginController implements Initializable, ControlledScreen {
 			lblStatus.setTextFill(Color.RED);
 			lblStatus.setEffect(glow);
 		}
+	}
+	
+	private void initItemService() {
+		ItemServiceImpl itemService = new ItemServiceImpl();
 	}
 
 	@Override
