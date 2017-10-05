@@ -28,11 +28,15 @@ public class Account {
 	@Column(name = "accountNumber", unique = true, nullable = true, length = 256)
 	private String accountNumber;
 	
+	@Column(name = "provider", unique = true, nullable = true, length = 256)
+	private String provider;
+	
 	public Account() {}
 	
-	public Account(String accountName, String accountNumber) {
+	public Account(String accountName, String accountNumber, String provider) {
 		this.accountName = accountName;
 		this.accountNumber = accountNumber;
+		this.provider = provider;
 	}
 	
 	public long getId() {
@@ -53,6 +57,14 @@ public class Account {
 	
 	public String getAccountNumber() {
 		return accountNumber;
+	}
+	
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+	
+	public String getProvider() {
+		return provider;
 	}
 	
 	// one account has many statements

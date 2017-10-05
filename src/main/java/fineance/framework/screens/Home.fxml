@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="680.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="fineance.framework.screens.controllers.HomeController">
+<AnchorPane prefHeight="680.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fineance.framework.screens.controllers.HomeController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -25,11 +28,43 @@
             <Label text="Welcome to FineAnce, a tool that will help you visualize your financial data. Please select an activity below to begin!" />
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" prefWidth="80.0" text="Accounts" />
-                  <Button mnemonicParsing="false" prefWidth="80.0" text="Importing" />
-                  <Button mnemonicParsing="false" prefWidth="80.0" text="Reporting" />
+                  <Button fx:id="btnAccounts" mnemonicParsing="false" onAction="#goToAccountsScreen" prefWidth="80.0" text="Accounts" />
+                  <Button fx:id="btnImporting" mnemonicParsing="false" onAction="#goToImportingScreen" prefWidth="80.0" text="Importing" />
+                  <Button fx:id="btnReporting" mnemonicParsing="false" onAction="#goToReportingScreen" prefWidth="80.0" text="Reporting" />
                </children>
             </HBox>
+            <Label fx:id="lblHoverTip" text="Hover over an activity for a description." />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane minHeight="200.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="300.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="400.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="300.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="lblActivity" text="Activity" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets top="20.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblDescription" text="Description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </children>
