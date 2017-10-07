@@ -1,0 +1,32 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#vboxPbp{
+    -fx-background-color:
+    linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
+    linear-gradient(#020b02, #3a3a3a),
+    linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%);
+}
+
+#hboxActivityTitle{
+	-fx-background-color:
+    linear-gradient(#00aeff 0%, #00e9ff 25%, #00e9ff 75%, #00aeff 100%),
+    linear-gradient(#020b02, #3a3a3a),
+    linear-gradient(#00aeff 0%, #00bbff 20%, #00bbff 80%, #00aeff 100%);
+}
+
+
+/* Font colour for labels */
+
+#lblPwittiboy{
+	-fx-text-fill:
+	white;
+}
+
+#lblActivityTitle{
+	-fx-text-fill:
+	white;
+}
+
+#lblActivitySubT{
+	-fx-text-fill:
+	white;
+}

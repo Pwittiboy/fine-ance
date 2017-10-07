@@ -53,7 +53,7 @@ public class ScreensFramework extends Application {
 		root.setId("root");
 		root.getChildren().addAll(mainContainer);
 		Scene scene = new Scene(root, 1000, 680);
-//		scene.getStylesheets().add("/application.css");
+		scene.getStylesheets().add("/application.css");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
