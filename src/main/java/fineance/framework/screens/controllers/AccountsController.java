@@ -7,6 +7,7 @@ import fineance.framework.ControlledScreen;
 import fineance.framework.ScreensController;
 import fineance.framework.ScreensFramework;
 import fineance.framework.screens.components.AccountsTable;
+import fineance.framework.screens.components.HomeButton;
 import fineance.libraries.entities.Account;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -39,52 +40,19 @@ public class AccountsController implements Initializable, ControlledScreen {
 	@Override
 	public void setScreenParent(ScreensController screenPage) {
 		myController = screenPage;
+		
+		// once we have controller, we can set up components that depend on it
+		initComponents();
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		initHomeButton();
-		initAddButton();
-		initAccountsTable();
-	}
-	
-	private void initHomeButton() {
-		lblPwittiboy.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				myController.setScreen(ScreensFramework.HOME_SCREEN_ID);
-			}
-			
-		});
-	}
-	
-	private void initAddButton() {
-		imgPlus.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				//TODO
-			}
-			
-		});
-	}
-	
-	private void initAccountsTable() {
-		table = new AccountsTable(tvAccounts, tcProvider, tcAccountNumber);
-		Runnable task = () -> {
-			table.populateTable();
-			
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					// TODO pb.setProgress(0);
-				}
-			});
-		};
 		
-		Thread t = new Thread(task);
-		t.start();
 	}
-
+	
+	private void initComponents() {
+		HomeButton.init(lblPwittiboy, myController);
+		table = AccountsTable.init(tvAccounts, tcProvider, tcAccountNumber, imgPlus);
+	}
+	
 }

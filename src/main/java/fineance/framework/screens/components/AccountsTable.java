@@ -7,11 +7,15 @@ import org.hibernate.SessionFactory;
 import fineance.libraries.dataaccess.dao.impl.AccountDAOImpl;
 import fineance.libraries.dataaccess.hibernate.HibernateUtil;
 import fineance.libraries.entities.Account;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import services.impl.ItemServiceImpl;
 
 public class AccountsTable {
@@ -37,6 +41,33 @@ public class AccountsTable {
 		this.tcAccountNumber = tcAccountNumber;
 	}
 	
+	public static AccountsTable init(TableView<Account> tvAccounts,
+			TableColumn<Account, String> tcProvider,
+			TableColumn<Account, String> tcAccountNumber,
+			ImageView imgPlus) {
+		
+		AccountsTable table = new AccountsTable(tvAccounts, tcProvider, tcAccountNumber);
+		
+		table.initAddAccountButton(imgPlus);
+		table.populateTable(); // if fired in multiple threads, risk clashing session
+		
+		Runnable task = () -> {
+			
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO pb.setProgress(0);
+				}
+			});
+		};
+		
+		Thread t = new Thread(task);
+		t.start();
+		
+		return table;
+	}
+	
 	public void populateTable() {
 		data = FXCollections.observableArrayList();
 		
@@ -49,6 +80,16 @@ public class AccountsTable {
 		
 		// populate table with data
 		tv.setItems(data);
+	}
+	
+	public void initAddAccountButton(ImageView imgPlus) {
+		imgPlus.setOnMouseClicked(new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {
+				//TODO
+			}
+		});
 	}
 
 }
