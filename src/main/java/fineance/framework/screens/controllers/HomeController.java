@@ -71,14 +71,20 @@ public class HomeController implements Initializable, ControlledScreen {
 	private void setButtonDescription(String buttonText) {
 		switch (buttonText) {
 			case "Accounts" : 
+				if (!lblActivity.isVisible()) lblActivity.setVisible(true); 
+				if (!lblDescription.isVisible()) lblDescription.setVisible(true); 
 				lblActivity.setText("Account Manager");
 				lblDescription.setText("Create, delete, and manage your accounts.");
 				break;
 			case "Importing" :
+				if (!lblActivity.isVisible()) lblActivity.setVisible(true);
+				if (!lblDescription.isVisible()) lblDescription.setVisible(true);
 				lblActivity.setText("Importing");
 				lblDescription.setText("Select a bank provider and import your bank statements.");
 				break;
 			case "Reporting" : 
+				if (!lblActivity.isVisible()) lblActivity.setVisible(true);
+				if (!lblDescription.isVisible()) lblDescription.setVisible(true);
 				lblActivity.setText("Reporting");
 				lblDescription.setText("Create visual reports from your financial data.");
 				break;

@@ -1,6 +1,8 @@
 package fineance.libraries.dataaccess.dao.impl;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -19,6 +21,7 @@ public class StatementDAOImpl implements StatementDAO {
 	private Session session;
 	private Statement statement;
 	private List<Statement> statements;
+	private long date;
 	
 	public StatementDAOImpl (SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -45,9 +48,21 @@ public class StatementDAOImpl implements StatementDAO {
 
 	@Override
 	public Statement findById(long id) {
-//		statement = (Statement) criteria().add(Restrictions.eqOrIsNull("statement_id", id));
-//		session.close();
 		return buildCriteria("statement_id", id);
+	}
+	
+	public Statement findStatement(LocalDate localDate, String type, String description, double value, double balance, Account account) {
+		ZoneId zoneId = ZoneId.systemDefault();
+		date = localDate.atStartOfDay(zoneId).toEpochSecond();
+		statement = (Statement) criteria().add(Restrictions.eqOrIsNull("date", date)).
+				add(Restrictions.eqOrIsNull("type", type)).
+				add(Restrictions.eqOrIsNull("description", description)).
+				add(Restrictions.eqOrIsNull("value", value)).
+				add(Restrictions.eqOrIsNull("balance", balance)).
+//				add(Restrictions.eqOrIsNull("account", account.getId())).
+				uniqueResult();
+		session.close();
+		return statement;
 	}
 
 	@Override

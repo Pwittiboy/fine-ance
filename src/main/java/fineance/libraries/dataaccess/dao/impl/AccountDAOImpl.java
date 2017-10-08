@@ -43,14 +43,14 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public Account findByName(String accountName) {
-		account = (Account) criteria().add(Restrictions.eqOrIsNull("accountName", accountName));
+		account = (Account) criteria().add(Restrictions.eqOrIsNull("accountName", accountName)).uniqueResult();
 		session.close();
 		return account;
 	}
 
 	@Override
 	public Account findByNumber(String accountNumber) {
-		account = (Account) criteria().add(Restrictions.eqOrIsNull("accountNumber", accountNumber));
+		account = (Account) criteria().add(Restrictions.eqOrIsNull("accountNumber", accountNumber)).uniqueResult();
 		session.close();
 		return account;
 	}

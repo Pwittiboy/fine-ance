@@ -12,9 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Account")
+@Table(name = "Account", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"accountName",
+		"accountNumber"
+}))
 public class Account {
 	
 	@Id

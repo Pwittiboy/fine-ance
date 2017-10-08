@@ -52,7 +52,7 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="lblActivity" text="Activity" GridPane.columnIndex="1">
+                        <Label fx:id="lblActivity" text="Activity" visible="false" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets top="20.0" />
                            </GridPane.margin>
@@ -60,7 +60,7 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblDescription" text="Description" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblDescription" text="Description" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

@@ -16,7 +16,12 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "Statement", uniqueConstraints = @UniqueConstraint(columnNames={
-		"statement_id"
+		"date",
+		"type",
+		"description",
+		"value",
+		"balance",
+		"account_id"
 }))
 public class Statement {
 	
@@ -25,19 +30,19 @@ public class Statement {
 	@Column(name = "statement_id", unique = true, nullable = false, length = 256)
 	private long id;
 	
-	@Column(name = "date", nullable = false, length = 256)
+	@Column(name = "date", unique = false, nullable = false, length = 256)
 	private long date;
 	
-	@Column(name = "type", nullable = false, length = 256)
+	@Column(name = "type", unique = false, nullable = false, length = 256)
 	private String type;
 	
-	@Column(name = "description", nullable = false, length = 256)
+	@Column(name = "description", unique = false, nullable = false, length = 256)
 	private String description;
 	
-	@Column(name = "value", nullable = true, length = 256)
+	@Column(name = "value", unique = false, nullable = true, length = 256)
 	private double value;
 	
-	@Column(name = "balance", nullable = true, length = 256)
+	@Column(name = "balance", unique = false, nullable = true, length = 256)
 	private double balance;
 	
 	// many statements with a single account attached to them
@@ -106,6 +111,13 @@ public class Statement {
 	
 	public Account getAccount() {
 		return account;
+	}
+	
+	@Override
+	public String toString() {
+		return "Statement - date: "+getDate()+", type: "+getType()+", description: "+
+				getDescription()+", value: "+getValue()+", balance: "+getBalance()+
+				", account: "+account.getProvider();
 	}
 	
 	
