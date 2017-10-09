@@ -41,7 +41,7 @@ public class ImportServiceImpl {
 	
 	private int transactionsImported;
 	private int existingTransactionsSkipped;
-	private int duration;
+	private double duration;
 	private int transactionsImportedPerSecond;
 	
 	public void importAccount(Account account) {
@@ -56,7 +56,7 @@ public class ImportServiceImpl {
 		transactionsImported = 0;
 		existingTransactionsSkipped = 0;
 		data.clear();
-		long startTime = System.currentTimeMillis();
+		double startTime = System.currentTimeMillis();
 		
 		while(scanner.hasNext()) {
 			List<String> line = CSVUtils.parseLine(scanner.nextLine());
@@ -105,8 +105,8 @@ public class ImportServiceImpl {
 		}
 		
 		//update stats
-		duration = (int)(System.currentTimeMillis() - startTime)/1000; // convert to seconds
-		transactionsImportedPerSecond = transactionsImported / duration;
+		duration = (System.currentTimeMillis() - startTime)/1000; // convert to seconds
+		transactionsImportedPerSecond = transactionsImported / (int)duration;
 		scanner.close();
 	}
 	
@@ -118,7 +118,7 @@ public class ImportServiceImpl {
 		return existingTransactionsSkipped;
 	}
 
-	public int getDuration() {
+	public double getDuration() {
 		return duration;
 	}
 

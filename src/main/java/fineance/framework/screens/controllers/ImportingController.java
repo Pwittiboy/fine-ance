@@ -172,8 +172,19 @@ public class ImportingController implements Initializable, ControlledScreen {
 	private void updateStats() {
 		lblTransactionsImported.setText(String.valueOf(importService.getTransactionsImported()));
 		lblExistingTransactionsSkipped.setText(String.valueOf(importService.getExistingTransactionsSkipped()));
-		lblDuration.setText(String.valueOf(importService.getDuration()));
+		lblDuration.setText(String.valueOf(formatDuration(importService.getDuration())));
 		lblTransactionsPerSecond.setText(String.valueOf(importService.getTransactionsImportedPerSecond()));
+	}
+	
+	private String formatDuration(double duration) {
+		
+		if (duration < 60) { // less than a minute, display seconds
+			return duration+"s";
+		} else if (duration < 3600) { // less than an hour, display minutes and seconds
+			return (int)(duration/60)+"m "+duration%60+"s";
+		} else { // over an  hour, display hours and minutes
+			return (int)(duration/3600)+"h "+duration%60+"m";
+		}
 	}
 
 }
