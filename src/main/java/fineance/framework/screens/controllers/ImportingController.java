@@ -18,6 +18,7 @@ import fineance.framework.screens.components.AccountsTable;
 import fineance.framework.screens.components.HomeButton;
 import fineance.framework.screens.components.ImportTable;
 import fineance.libraries.entities.Account;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -42,7 +44,7 @@ public class ImportingController implements Initializable, ControlledScreen {
 	private static ImportServiceImpl importService = new ImportServiceImpl();
 
 	@FXML
-	private Label lblPwittiboy;
+	private Label lblPwittiboy, lblImportStatus, lblFileName;
 	
 	@FXML //stats
 	private Label lblTransactionsImported, lblExistingTransactionsSkipped, lblDuration, lblTransactionsPerSecond;
@@ -73,6 +75,9 @@ public class ImportingController implements Initializable, ControlledScreen {
 	
 	@FXML
 	private TableColumn tcStatus, tcDate, tcType, tcDescription, tcValue, tcBalance, tcAccount;
+	
+	@FXML
+	private ProgressBar pbImport;
 
 	private AccountsTable table = null;
 	private ImportTable importTable = null;
@@ -89,6 +94,9 @@ public class ImportingController implements Initializable, ControlledScreen {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		lblImportStatus.setVisible(false);
+		lblFileName.setVisible(false);
+		btnGo.setDisable(true);
 	}
 
 	private void initComponents() {
@@ -140,13 +148,33 @@ public class ImportingController implements Initializable, ControlledScreen {
 
 	@FXML
 	private void btnGoAction() {
-		try {
-			readCSV();
-			updateStats();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
+		
+		pbImport.setVisible(true);
+		pbImport.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+		
+		Runnable task = () -> {
+			
+			try {
+				readCSV();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					updateStats();
+					pbImport.setProgress(0);
+					importService.writeImportStatus(lblImportStatus, lblFileName, tfImportFile.getText());
+					tfImportFile.clear();
+				}
+			});
+		};
+		
+		Thread t = new Thread(task);
+		t.start();
+		
 		btnGo.setDisable(true);
 	}
 

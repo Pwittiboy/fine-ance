@@ -18,6 +18,7 @@ import fineance.utils.CSVUtils;
 import fineance.utils.DateFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 
 public class ImportServiceImpl {
 	
@@ -43,6 +44,7 @@ public class ImportServiceImpl {
 	private int existingTransactionsSkipped;
 	private double duration;
 	private int transactionsImportedPerSecond;
+	private boolean importStatus;
 	
 	public void importAccount(Account account) {
 		adao.updateAccount(account);
@@ -55,6 +57,7 @@ public class ImportServiceImpl {
 		int lineNumber = 0;
 		transactionsImported = 0;
 		existingTransactionsSkipped = 0;
+		importStatus = false;
 		data.clear();
 		double startTime = System.currentTimeMillis();
 		
@@ -108,6 +111,7 @@ public class ImportServiceImpl {
 		duration = (System.currentTimeMillis() - startTime)/1000; // convert to seconds
 		transactionsImportedPerSecond = transactionsImported / (int)duration;
 		scanner.close();
+		importStatus = true;
 	}
 	
 	public int getTransactionsImported() {
@@ -128,6 +132,31 @@ public class ImportServiceImpl {
 	
 	public ObservableList<Statement> getData() {
 		return data;
+	}
+	
+	public void writeImportStatus(Label lblImportStatus, Label lblFileName, String filePath) {
+		lblImportStatus.setVisible(true);
+		lblFileName.setVisible(true);
+		
+		String fileName = filePath;
+		int index = 0;
+		for (int i = fileName.length()-1; i>=0; i--) {
+			if (fileName.charAt(i) == '/' || fileName.charAt(i) == '\\') {
+				index = i+1;
+				break;
+			}
+		}
+		
+		fileName = fileName.substring(index);
+		
+		if (importStatus) {
+			lblImportStatus.setText("Import Complete for file: ");
+			lblFileName.setText(fileName);
+		} else {
+			lblImportStatus.setText("Import Failed for file: ");
+			lblFileName.setText(fileName);
+		}
+		
 	}
 
 
