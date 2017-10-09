@@ -185,7 +185,7 @@ public class ImportingController implements Initializable, ControlledScreen {
 				break;
 			}
 		}
-		importTable = new ImportTable(tvImport, tcDate, tcType, tcDescription, tcValue, tcBalance);
+		importTable = new ImportTable(tvImport, tcStatus, tcDate, tcType, tcDescription, tcValue, tcBalance, tcAccount);
 		importTable.populateTable(importService.getData());
 	}
 	

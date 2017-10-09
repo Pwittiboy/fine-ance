@@ -1,5 +1,6 @@
 package fineance.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -43,6 +44,12 @@ public class DateFormatter {
 	   
 	   public static long formatStringToEpoch(String string) {
 		   return formatLocally(string).atStartOfDay(zoneId).toEpochSecond();
+	   }
+	   
+	   public static String formatEpochToString(long date) {
+		   Date d = new Date(date);
+		   DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		   return df.format(d);
 	   }
 	   
 }

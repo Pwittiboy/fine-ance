@@ -213,7 +213,7 @@
                         <TableColumn fx:id="tcDescription" prefWidth="250.0" text="Description" />
                         <TableColumn fx:id="tcValue" prefWidth="75.0" text="Value" />
                         <TableColumn fx:id="tcBalance" prefWidth="75.0" text="Balance" />
-                        <TableColumn prefWidth="75.0" text="Account" />
+                        <TableColumn fx:id="tcAccount" prefWidth="75.0" text="Account" />
                     </columns>
                   </TableView>
                   <GridPane>

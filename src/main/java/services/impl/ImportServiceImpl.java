@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 
 import fineance.framework.screens.controllers.ImportingController;
+import fineance.framework.screens.tabledata.ImportTableData;
 import fineance.libraries.dataaccess.dao.impl.AccountDAOImpl;
 import fineance.libraries.dataaccess.dao.impl.StatementDAOImpl;
 import fineance.libraries.dataaccess.hibernate.HibernateUtil;
@@ -38,13 +39,14 @@ public class ImportServiceImpl {
 	private String accountNumber;
 
 	private Statement statement;
-	private ObservableList<Statement> data = FXCollections.observableArrayList();
+	private ObservableList<ImportTableData> data = FXCollections.observableArrayList();
 	
 	private int transactionsImported;
 	private int existingTransactionsSkipped;
 	private double duration;
 	private int transactionsImportedPerSecond;
 	private boolean importStatus;
+	private String status;
 	
 	public void importAccount(Account account) {
 		adao.updateAccount(account);
@@ -58,6 +60,7 @@ public class ImportServiceImpl {
 		transactionsImported = 0;
 		existingTransactionsSkipped = 0;
 		importStatus = false;
+		status = "";
 		data.clear();
 		double startTime = System.currentTimeMillis();
 		
@@ -98,12 +101,14 @@ public class ImportServiceImpl {
 						Double.parseDouble(line.get(4)),
 						account);
 				transactionsImported++;
+				status = "Imported";
 			} else {
 				existingTransactionsSkipped++;
+				status = "Skipped";
 			}
 			
 			LOGGER.info("Preparing statement for import: "+statement);
-			data.add(statement);
+			data.add(new ImportTableData(status, statement));
 			sdao.updateStatement(statement);
 		}
 		
@@ -130,7 +135,7 @@ public class ImportServiceImpl {
 		return transactionsImportedPerSecond;
 	}
 	
-	public ObservableList<Statement> getData() {
+	public ObservableList getData() {
 		return data;
 	}
 	
