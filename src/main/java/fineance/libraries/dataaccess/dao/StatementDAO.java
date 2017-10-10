@@ -14,7 +14,7 @@ public interface StatementDAO {
 	List<Statement> findByDate(long date);
 	Statement findByType(String type);
 	Statement findByDescription(String description);
-	Statement findByAccount(Account account);
+	List<Statement> findByAccount(Account account);
 	
 	List<Statement> findByDateAndAccount(long date, Account account);
 	

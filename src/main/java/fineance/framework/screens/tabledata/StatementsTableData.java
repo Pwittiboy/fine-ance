@@ -3,43 +3,24 @@ package fineance.framework.screens.tabledata;
 import fineance.libraries.entities.Statement;
 import fineance.utils.DateFormatter;
 
-public class ImportTableData {
-
-	private String status;
+public class StatementsTableData {
+	
 	private String date;
 	private String type;
 	private String description;
-	private String value; // using String to concatenate a £ sign
-	private String balance;
-	private String accountNumber; // accountNumber
-
-	public ImportTableData(String status, Statement statement) {
-		this.status = status;
-
+	private double value;
+	private double balance;
+	private String accountNumber;
+	
+	public StatementsTableData(Statement statement) {
 		date = DateFormatter.formatEpochToString(statement.getDate());
 		type = statement.getType();
 		description = statement.getDescription();
 		
-		value = formatNegatives(statement.getValue());
-		balance = formatNegatives(statement.getBalance());
+		value = statement.getValue();
+		balance = statement.getBalance();
 
 		accountNumber = statement.getAccount().getAccountNumber();
-	}
-	
-	private String formatNegatives(double amount) {
-		if (amount < 0) {
-			return "-£"+(amount*-1);
-		} else {
-			return "£"+amount;
-		}
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public String getDate() {
@@ -66,19 +47,19 @@ public class ImportTableData {
 		this.description = description;
 	}
 
-	public String getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 
-	public String getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(String balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 

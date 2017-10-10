@@ -101,10 +101,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                  <TableView fx:id="tvStatements" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="tcDate" prefWidth="75.0" text="Date" />
+                      <TableColumn fx:id="tcType" prefWidth="75.0" text="Type" />
+                        <TableColumn fx:id="tcDescription" prefWidth="320.0" text="Description" />
+                        <TableColumn fx:id="tcValue" prefWidth="75.0" text="Value (£)" />
+                        <TableColumn fx:id="tcBalance" prefWidth="75.0" text="Balance (£)" />
+                        <TableColumn fx:id="tcAccount" prefWidth="75.0" text="Account" />
                     </columns>
                   </TableView>
                   <GridPane>

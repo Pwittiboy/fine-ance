@@ -3,6 +3,7 @@ package fineance.libraries.dataaccess.dao.impl;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -82,8 +83,18 @@ public class StatementDAOImpl implements StatementDAO {
 	}
 
 	@Override
-	public Statement findByAccount(Account account) {
-		return buildCriteria("account", account);
+	public List<Statement> findByAccount(Account account) {
+//		List<Statement> statements = criteria().add(Restrictions.eqOrIsNull("account", account.getId())).list();
+		
+		// workaround
+		statements = new ArrayList<>();
+		for (Statement s : findAll()) {
+			if (s.getAccount().getId() == account.getId()) {
+				statements.add(s);
+			}
+		}
+		session.close();
+		return statements;
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class AccountsTable {
 	private TableColumn<Account, String> tcAccountNumber;
 	private ObservableList<Account> data;
 	
-	List<Account> accounts;
+	private List<Account> accounts;
 	
 	public AccountsTable(TableView<Account> tv,
 			TableColumn<Account, String> tcProvider,
@@ -87,6 +87,28 @@ public class AccountsTable {
 			
 			@Override
 			public void handle(Event event) {
+				//TODO
+			}
+		});
+	}
+	
+	public void refreshTable() {
+		data.clear();
+		
+		ItemServiceImpl.updateAccounts();
+		accounts = ItemServiceImpl.getAccountDAO().findAll();
+		
+		// map data to columns
+		tcProvider.setCellValueFactory(new PropertyValueFactory<Account, String>("provider"));
+		tcAccountNumber.setCellValueFactory(new PropertyValueFactory<Account, String>("accountNumber"));
+
+		// populate table with data
+		tv.setItems(data);
+	}
+	
+	public void setListener(TableView tvStatements) {
+		this.tv.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			if (newSelection != null) {
 				//TODO
 			}
 		});

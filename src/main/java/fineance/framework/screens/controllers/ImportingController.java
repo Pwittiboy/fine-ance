@@ -168,6 +168,7 @@ public class ImportingController implements Initializable, ControlledScreen {
 					pbImport.setProgress(0);
 					importService.writeImportStatus(lblImportStatus, lblFileName, tfImportFile.getText());
 					tfImportFile.clear();
+					table.refreshTable();
 				}
 			});
 		};
