@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import fineance.framework.ControlledScreen;
 import fineance.framework.ScreensController;
 import fineance.framework.screens.components.AccountsTable;
+import fineance.framework.screens.components.BalanceChart;
+import fineance.framework.screens.components.ExpenditureChart;
 import fineance.framework.screens.components.HomeButton;
 import fineance.framework.screens.components.StatementsTable;
 import fineance.framework.screens.tabledata.StatementsTableData;
@@ -16,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,8 +47,13 @@ public class AccountsController implements Initializable, ControlledScreen {
 	@FXML
 	private TableColumn tcDate, tcType, tcDescription, tcValue, tcBalance, tcAccount;
 	
+	@FXML
+	private AreaChart achartBalance, achartExpenditure;
+	
 	private AccountsTable table = null;
 	private StatementsTable statementsTable = null;
+	private BalanceChart balanceChart = null;
+	private ExpenditureChart expenditureChart = null;
 	
 	private List<Statement> statements;
 	private ObservableList<StatementsTableData> data;
@@ -73,6 +81,7 @@ public class AccountsController implements Initializable, ControlledScreen {
 		tvAccounts.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 				populateStatementsTable(tvAccounts.getSelectionModel().getSelectedItem());
+				populateCharts();
 			}
 		});
 	}
@@ -88,6 +97,16 @@ public class AccountsController implements Initializable, ControlledScreen {
 		}
 		
 		statementsTable.populateTable(data);
+	}
+	
+	public void populateCharts() {
+		
+		// remove data if present
+		if (balanceChart != null && !achartBalance.getData().isEmpty()) achartBalance.getData().clear();;
+		if (expenditureChart != null && !achartExpenditure.getData().isEmpty()) achartExpenditure.getData().clear();
+		
+		// instantiate the charts
+		if (balanceChart == null); 
 	}
 	
 }
