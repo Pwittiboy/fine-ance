@@ -11,7 +11,7 @@ import java.util.Date;
 public class DateFormatter {
 
 	   private static Date date = null;
-	   private static final ZoneId zoneId = ZoneId.systemDefault();
+	   private static final ZoneId ZONE_ID = ZoneId.systemDefault();
 	   
 	   private static DateTimeFormatter dtf;
 	   
@@ -43,7 +43,7 @@ public class DateFormatter {
 	   }
 	   
 	   public static long formatStringToEpoch(String string) {
-		   return formatLocally(string).atStartOfDay(zoneId).toEpochSecond();
+		   return formatLocally(string).atStartOfDay(ZONE_ID).toEpochSecond();
 	   }
 	   
 	   public static String formatEpochToString(long date) {
@@ -53,8 +53,15 @@ public class DateFormatter {
 	   }
 	   
 	   public static Date formatEpochToDate(long date) {
-		   Date d = new Date(date*1000);
-		   return d;
+		   return new Date(date*1000);
+	   }
+	   
+	   public static LocalDate formatDateToLocalDate(Date date) {
+		   return date.toInstant().atZone(ZONE_ID).toLocalDate();
+	   }
+	   
+	   public static Date formatLocalDateToDate(LocalDate localDate) {
+		   return Date.from(localDate.atStartOfDay().atZone(ZONE_ID).toInstant());
 	   }
 	   
 }

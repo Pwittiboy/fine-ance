@@ -125,7 +125,7 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <AreaChart fx:id="achartBalance" title="Balance">
+                              <AreaChart fx:id="achartBalance" legendVisible="false" title="Balance">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" />
                                 </xAxis>
@@ -137,7 +137,7 @@
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                            <children>
-                              <AreaChart fx:id="achartExpenditure" title="Expenditure">
+                              <AreaChart fx:id="achartExpenditure" legendVisible="false" title="Expenditure">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" />
                                 </xAxis>

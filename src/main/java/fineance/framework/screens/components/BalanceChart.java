@@ -48,8 +48,7 @@ public class BalanceChart {
 				DateFormatter.formatEpochToDate(a.getDate()).equals(DateFormatter.formatEpochToDate(b.getDate())) ? 0 : 1 );
 		
 		endDate = DateFormatter.formatEpochToDate(statements.get(statements.size()-1).getDate());
-//		startDate = endDate - 1;
-//		startDate = Date.from(LocalDate.now().minusDays(28).atStartOfDay(ZoneId.systemDefault()).toInstant());
+		startDate = DateFormatter.formatLocalDateToDate(DateFormatter.formatDateToLocalDate(endDate).minusDays(28));
 		
 		for (Statement s : statements) {
 			date = DateFormatter.formatEpochToDate(s.getDate());
