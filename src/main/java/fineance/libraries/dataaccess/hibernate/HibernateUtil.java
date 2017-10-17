@@ -13,6 +13,8 @@ public class HibernateUtil {
 	
 	private static final Logger LOGGER = Logger.getLogger(HibernateUtil.class);
 	
+	private static String USERNAME, PASSWORD;
+	
 	private static SessionFactory sessionFactory;
 	
 	public static SessionFactory getSessionFactory() {
@@ -26,6 +28,10 @@ public class HibernateUtil {
 				LOGGER.error("Problem creating session factory");
 				e.printStackTrace();
 			}
+			
+			// add database credentials
+			config.setProperty("hibernate.connection.username", USERNAME);
+			config.setProperty("hibernate.connection.password", PASSWORD);
 			
 			// add entity classes
 			config.addAnnotatedClass(fineance.libraries.entities.Account.class);
@@ -41,6 +47,11 @@ public class HibernateUtil {
 			LOGGER.info("Standard Service Registry built.");
 		}
 		return sessionFactory;
+	}
+	
+	public static void setDatabaseCredentials(String username, String password) {
+		USERNAME = username;
+		PASSWORD = password;
 	}
 
 }

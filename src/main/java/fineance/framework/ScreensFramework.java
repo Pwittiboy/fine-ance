@@ -1,5 +1,6 @@
 package fineance.framework;
 
+import fineance.libraries.dataaccess.hibernate.HibernateUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -76,6 +77,8 @@ public class ScreensFramework extends Application {
 			if (args[i].equals("dbusername")) DB_USERNAME = args[i+1];
 			if (args[i].equals("dbpassword")) DB_PASSWORD = args[i+1];
 		}
+		
+		HibernateUtil.setDatabaseCredentials(DB_USERNAME, DB_PASSWORD);
 	}
 
 }
