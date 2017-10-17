@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,6 +58,8 @@ public class AccountsController implements Initializable, ControlledScreen {
 	
 	private List<Statement> statements;
 	private ObservableList<StatementsTableData> data;
+	
+	private XYChart.Series series;
 
 	@Override
 	public void setScreenParent(ScreensController screenPage) {
@@ -106,7 +109,14 @@ public class AccountsController implements Initializable, ControlledScreen {
 		if (expenditureChart != null && !achartExpenditure.getData().isEmpty()) achartExpenditure.getData().clear();
 		
 		// instantiate the charts
-		if (balanceChart == null); 
+		if (balanceChart == null) balanceChart = new BalanceChart(achartBalance);
+		
+		Runnable task = () -> {
+			balanceChart.populate();
+		};
+		
+		Thread t = new Thread(task);
+		t.start();
 	}
 	
 }

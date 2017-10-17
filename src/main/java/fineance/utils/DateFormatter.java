@@ -47,9 +47,14 @@ public class DateFormatter {
 	   }
 	   
 	   public static String formatEpochToString(long date) {
-		   Date d = new Date(date);
+		   Date d = new Date(date*1000);
 		   DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		   return df.format(d);
+	   }
+	   
+	   public static Date formatEpochToDate(long date) {
+		   Date d = new Date(date*1000);
+		   return d;
 	   }
 	   
 }
