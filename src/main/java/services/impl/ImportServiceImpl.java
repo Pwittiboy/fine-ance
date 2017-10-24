@@ -53,8 +53,6 @@ public class ImportServiceImpl {
 	}
 	
 	public void readCSVNatwest(File file) throws FileNotFoundException {
-		this.controller = controller;
-		
 		Scanner scanner = new Scanner(file);
 		int lineNumber = 0;
 		transactionsImported = 0;
@@ -115,6 +113,71 @@ public class ImportServiceImpl {
 		//update stats
 		duration = (System.currentTimeMillis() - startTime)/1000; // convert to seconds
 		transactionsImportedPerSecond = transactionsImported / (int)duration;
+		scanner.close();
+		importStatus = true;
+	}
+	
+	public void readCsvVirgin(File file) throws FileNotFoundException {
+		Scanner scanner = new Scanner(file);
+		int lineNumber = 0;
+		transactionsImported = 0;
+		existingTransactionsSkipped = 0;
+		importStatus = false;
+		status = "";
+		data.clear();
+		double startTime = System.currentTimeMillis();
+		
+		while(scanner.hasNext()) {
+			List<String> line = CSVUtils.parseLine(scanner.nextLine());
+			
+			if (lineNumber==0) {
+				accountNumber = line.get(1);
+				accountName = "Virgin-"+accountNumber;
+			}
+			lineNumber++;
+			if (lineNumber<= 7) continue; // data starts on line 7
+			if (line.get(0).isEmpty()) break; // there are no more statements at this point
+			
+			/* account */
+			
+			// add account if it doesn't exist in DB
+			if (adao.findByName(accountName)==null) {
+				account = new Account(accountName, accountNumber, VIRGIN);
+				importAccount(account);
+			} else {
+				account = adao.findByName(accountName);
+			}
+			
+			double value = 0;
+			/* statement */
+			statement = sdao.findStatement(DateFormatter.formatLocally(line.get(0)),
+					null,
+					line.get(1),
+					value = !line.get(2).isEmpty() ? Double.parseDouble(line.get(2)) : Double.parseDouble(line.get(3)),
+					Double.parseDouble(line.get(4)),
+					account);
+			if (statement == null) { // if statement doesn't exist in db, create new one
+				statement = new Statement(DateFormatter.formatLocally(line.get(0)),
+						null,
+						line.get(1),
+						value = !line.get(2).isEmpty() ? Double.parseDouble(line.get(2)) : Double.parseDouble(line.get(3)),
+						Double.parseDouble(line.get(4)),
+						account);
+				transactionsImported++;
+				status = "Imported";
+			} else {
+				existingTransactionsSkipped++;
+				status = "Skipped";
+			}
+			
+			LOGGER.info("Preparing statement for import: "+statement);
+			data.add(new ImportTableData(status, statement));
+			sdao.updateStatement(statement);
+		}
+		
+		//update stats
+		duration = (System.currentTimeMillis() - startTime)/1000; // convert to seconds
+		transactionsImportedPerSecond = (int) (transactionsImported / (duration = duration<1?1:duration)); // protect from dividing by zero
 		scanner.close();
 		importStatus = true;
 	}

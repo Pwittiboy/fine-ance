@@ -79,7 +79,7 @@ public class ImportingController implements Initializable, ControlledScreen {
 	@FXML
 	private ProgressBar pbImport;
 
-	private AccountsTable table = null;
+	private AccountsTable accountTable = null;
 	private ImportTable importTable = null;
 
 	private File temp;
@@ -101,7 +101,7 @@ public class ImportingController implements Initializable, ControlledScreen {
 
 	private void initComponents() {
 		HomeButton.init(lblPwittiboy, myController);
-		table = AccountsTable.init(tvAccounts, tcProvider, tcAccountNumber, imgPlus);
+		accountTable = AccountsTable.init(tvAccounts, tcProvider, tcAccountNumber, imgPlus);
 //		importTable = ImportTable.init(tvImport, tcDate, tcType, tcDescription, tcValue, tcBalance, tcAccount);
 		cbFileTypePopulate();
 	}
@@ -168,7 +168,7 @@ public class ImportingController implements Initializable, ControlledScreen {
 					pbImport.setProgress(0);
 					importService.writeImportStatus(lblImportStatus, lblFileName, tfImportFile.getText());
 					tfImportFile.clear();
-					table.refreshTable();
+					accountTable.refreshTable();
 				}
 			});
 		};
@@ -185,9 +185,14 @@ public class ImportingController implements Initializable, ControlledScreen {
 				importService.readCSVNatwest(temp);
 				break;
 			}
+			case "Virgin" : {
+				importService.readCsvVirgin(temp);
+				break;
+			}
 		}
 		importTable = new ImportTable(tvImport, tcStatus, tcDate, tcType, tcDescription, tcValue, tcBalance, tcAccount);
 		importTable.populateTable(importService.getData());
+		accountTable.refreshTable();
 	}
 	
 	private void cbFileTypePopulate() {

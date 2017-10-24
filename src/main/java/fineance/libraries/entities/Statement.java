@@ -33,7 +33,7 @@ public class Statement {
 	@Column(name = "date", unique = false, nullable = false, length = 256)
 	private long date;
 	
-	@Column(name = "type", unique = false, nullable = false, length = 256)
+	@Column(name = "type", unique = false, nullable = true, length = 256)
 	private String type;
 	
 	@Column(name = "description", unique = false, nullable = false, length = 256)
