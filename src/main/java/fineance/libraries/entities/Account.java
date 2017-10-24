@@ -32,7 +32,7 @@ public class Account {
 	@Column(name = "accountNumber", unique = true, nullable = true, length = 256)
 	private String accountNumber;
 	
-	@Column(name = "provider", unique = true, nullable = true, length = 256)
+	@Column(name = "provider", unique = false, nullable = true, length = 256)
 	private String provider;
 	
 	public Account() {}
