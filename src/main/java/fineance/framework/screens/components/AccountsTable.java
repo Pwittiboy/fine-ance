@@ -97,6 +97,7 @@ public class AccountsTable {
 		
 		ItemServiceImpl.updateAccounts();
 		accounts = ItemServiceImpl.getAccountDAO().findAll();
+		data.addAll(accounts);
 		
 		// map data to columns
 		tcProvider.setCellValueFactory(new PropertyValueFactory<Account, String>("provider"));
